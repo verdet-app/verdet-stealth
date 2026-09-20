@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "compilerOptions": {
+    "target": "ES2023",
+    "lib": ["ES2023"],
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+
+    /**
+     * Every strictness flag TypeScript offers, and two that most projects turn off.
+     *
+     * `noUncheckedIndexedAccess` makes `array[i]` return `T | undefined`, which is what it actually
+     * returns. In a library that walks byte arrays and ring members by index, the alternative is a
+     * type system that agrees with code which is about to read past the end.
+     *
+     * `exactOptionalPropertyTypes` keeps `{ label?: string }` from silently accepting
+     * `{ label: undefined }`. A watch key with an explicitly undefined scope label is not the same
+     * object as one with no label, and one of those two means "the whole wallet".
+     */
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "noFallthroughCasesInSwitch": true,
+    "exactOptionalPropertyTypes": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "composite": true,
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+
+    "rootDir": "./src",
+    "outDir": "./dist"
+  },
+  "include": ["src/**/*.ts"]
+}

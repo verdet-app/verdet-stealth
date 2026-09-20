@@ -1,0 +1,55 @@
+{
+  "name": "@verdet/stealth",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Stealth addresses, ring signatures, sigma-protocol proofs and oblivious transfer over secp256k1. No dependencies beyond audited curve and hash primitives.",
+  "license": "MIT",
+  "author": "verdet-app <admin@verdet.app>",
+  "homepage": "https://verdet.app",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/verdet-app/verdet-stealth.git"
+  },
+  "bugs": {
+    "url": "https://github.com/verdet-app/verdet-stealth/issues"
+  },
+  "keywords": [
+    "erc-5564",
+    "erc-6538",
+    "stealth-address",
+    "ring-signature",
+    "oblivious-transfer",
+    "secp256k1",
+    "privacy"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsc --build",
+    "clean": "tsc --build --clean",
+    "test": "npm run build && node --test \"test/*.test.mjs\"",
+    "check": "npm run build && node --test \"test/*.test.mjs\""
+  },
+  "dependencies": {
+    "@noble/curves": "2.4.0",
+    "@noble/hashes": "2.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "^5.7.0"
+  }
+}

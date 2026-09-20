@@ -1,0 +1,43 @@
+# Secrets first, because everything else here is recoverable and these are not.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.keystore
+id_rsa*
+*.mnemonic
+*.seed
+wallet*.json
+*-wallet.json
+keystore/
+secrets/
+
+# Dependencies and build output
+node_modules/
+dist/
+*.tsbuildinfo
+
+# Tests and profiling
+coverage/
+*.lcov
+*.cpuprofile
+*.heapsnapshot
+
+# Logs
+*.log
+npm-debug.log*
+
+# Editors. Shared settings are worth committing; a personal launch config is not.
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+.idea/
+*.swp
+
+# Operating systems
+.DS_Store
+Thumbs.db
+Desktop.ini
