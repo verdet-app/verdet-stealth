@@ -10,8 +10,13 @@ Nothing yet.
 
 ## 0.1.0
 
-First published version. Everything below runs in production at
+Released 2026-09-20. First published version. Everything below runs in production at
 [verdet.app](https://verdet.app).
+
+Published by hand, which is the only version of this package that ever will be. npm attaches a
+trusted publisher to a package that already exists, so creating the package had to come first.
+From 0.1.1 the release workflow publishes by OIDC and every tarball carries a provenance
+attestation.
 
 ### Receiving
 
