@@ -25,3 +25,10 @@ export {
   type StealthKeyPair,
   type StealthKeys,
 } from './keys.js'
+export {
+  createStealthPayment,
+  checkAnnouncement,
+  type StealthPayment,
+  type AnnouncementCandidate,
+  type StealthMatch,
+} from './payment.js'
