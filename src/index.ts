@@ -32,4 +32,11 @@ export {
   type AnnouncementCandidate,
   type StealthMatch,
 } from './payment.js'
+export {
+  REGISTER_KEYS_SELECTOR,
+  STEALTH_META_ADDRESS_OF_SELECTOR,
+  encodeRegisterKeys,
+  encodeStealthMetaAddressOf,
+  decodeStealthMetaAddressOf,
+} from './registry.js'
 export { hexToBytesLoose } from './abi.js'
