@@ -79,7 +79,16 @@ docs(security): name what is in scope
 ## Releasing
 
 Publishing runs in CI and nowhere else, because a publish from a laptop cannot carry a provenance
-attestation and an unattested tarball is the thing this library argues against.
+attestation and an unattested tarball is the thing this library argues against. Version 0.1.0 is
+the one exception in this package's history, and it exists only because npm attaches a trusted
+publisher to a package that already exists, so something had to create the package first.
+
+CI authenticates by [trusted publishing][tp]: the workflow exchanges a short-lived OIDC token with
+the registry at publish time. **There is no npm token stored in this repository**, which is the
+point. A long-lived publish credential sitting in a settings page is a credential that can be read
+by anything that ever gains access to it.
+
+[tp]: https://docs.npmjs.com/trusted-publishers
 
 1. Land the change on `main` with CI green.
 2. Update `CHANGELOG.md`. An entry that changes a derivation says so at the top of it, because a
