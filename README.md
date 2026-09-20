@@ -4,6 +4,7 @@
 sigma-protocol proofs and oblivious transfer, over secp256k1, in one package with two
 dependencies.
 
+[![npm](https://img.shields.io/npm/v/@verdet/stealth?color=3FBF23&label=npm)](https://www.npmjs.com/package/@verdet/stealth)
 [![tests](https://img.shields.io/badge/tests-151%20passing-3FBF23)](#running-it)
 [![node](https://img.shields.io/badge/node-%E2%89%A522-3FBF23)](#running-it)
 [![dependencies](https://img.shields.io/badge/dependencies-2-3FBF23)](#the-dependency-list-in-full)
