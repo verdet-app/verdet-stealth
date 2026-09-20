@@ -81,6 +81,15 @@ export {
   type Notes,
 } from './notes.js'
 export {
+  backupSheet,
+  parsePrivateKey,
+  fingerprint,
+  walletFingerprint,
+  checkTranscription,
+  type BackupSheet,
+  type TranscriptionResult,
+} from './backup.js'
+export {
   scopedViewingKey,
   deriveScope,
   keysForScope,
