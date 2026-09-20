@@ -8,6 +8,12 @@ name: release
 # this library makes about everything else it does.
 #
 # A publish from somebody's laptop cannot produce that attestation, so it is not how this ships.
+#
+# There is no npm token in this repository. The registry is told, once, that this workflow in this
+# repository is allowed to publish this package, and the publish step then exchanges a short-lived
+# OIDC token for the right to do it. A long-lived credential in a settings page is a credential
+# somebody can walk off with; one that expires in minutes and only exists inside a public build is
+# not.
 
 on:
   release:
@@ -42,6 +48,12 @@ jobs:
           registry-url: https://registry.npmjs.org
           cache: npm
 
+      # Trusted publishing landed in npm 11.5.1. The npm bundled with a Node release is older than
+      # that for a long while after, and the failure mode without this line is an ordinary publish
+      # with no attestation rather than an error, which is the worst way for it to go wrong.
+      - name: Use an npm that can do trusted publishing
+        run: npm install --global npm@latest
+
       - name: Install
         run: npm ci
 
@@ -67,11 +79,11 @@ jobs:
       - name: Pack
         run: npm pack --dry-run
 
+      # No NODE_AUTH_TOKEN. Authentication is the OIDC exchange, and provenance comes with it
+      # without asking, so there is no --provenance flag here either.
       - name: Publish
         if: github.event_name == 'release'
-        run: npm publish --provenance --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm publish --access public
 
       - name: Not published
         if: github.event_name != 'release'
