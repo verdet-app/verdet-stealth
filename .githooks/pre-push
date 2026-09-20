@@ -1,0 +1,63 @@
+#!/bin/sh
+#
+# The push gate. No override flag, on purpose.
+#
+# Install once per clone:  git config core.hooksPath .githooks
+#
+# CI runs the same checks. A hook a contributor can skip is a hook that only catches the
+# contributors who did not need catching.
+
+set -e
+
+red() { printf '\033[31m%s\033[0m\n' "$1"; }
+ok() { printf '  %s\n' "$1"; }
+
+fail() {
+  red "PUSH REFUSED: $1"
+  exit 1
+}
+
+echo "pre-push gate"
+
+# 1. Human contributors only.
+#
+# A public repository's history is a claim about who built the thing. Trailers and assistant
+# identities in an author or a message make that claim false, so they are refused here rather than
+# argued about in review.
+if git log --format='%an%n%ae%n%cn%n%ce%n%B' origin/main..HEAD 2>/dev/null |
+   grep -Eiq 'co-authored-by|claude|copilot|chatgpt|openai|anthropic|\bAI\b|noreply@anthropic'; then
+  fail "a commit carries a co-author trailer or an assistant identity"
+fi
+ok "authors and messages are human"
+
+# 2. Nothing private is tracked.
+if git ls-files | grep -Eq '(^|/)(internal/|\.env$|\.env\..*|node_modules/|dist/|secrets/)|\.(pem|key|p12|pfx|keystore)$'; then
+  fail "a private path or key file is tracked"
+fi
+if git ls-files | grep -Eq 'wallet.*\.json$'; then
+  fail "a wallet file is tracked"
+fi
+ok "no private paths tracked"
+
+# 3. No obvious secret material in the tree.
+#
+# Not a replacement for gitleaks, which CI runs. This catches the two shapes that have actually
+# shown up in this project: a hex private key pasted into a source file, and a provider token.
+if git grep -nEI '(^|[^0-9a-fA-Fx])0x[0-9a-fA-F]{64}([^0-9a-fA-F]|$)' -- 'src' 'test' ':!test/interop.test.mjs' >/dev/null 2>&1; then
+  red "a 32 byte hex literal appears outside the published test vector:"
+  git grep -nEI '(^|[^0-9a-fA-Fx])0x[0-9a-fA-F]{64}([^0-9a-fA-F]|$)' -- 'src' 'test' ':!test/interop.test.mjs' | head -5
+  fail "check whether that is a key"
+fi
+if git grep -nEI 'gh[pousr]_[A-Za-z0-9]{20,}' -- . >/dev/null 2>&1; then
+  fail "a GitHub token appears in the tree"
+fi
+ok "no secret shapes found"
+
+# 4. It builds, and the tests pass.
+npm run build >/dev/null
+ok "typecheck and build"
+
+npm test >/dev/null
+ok "tests"
+
+echo "pre-push gate passed"
