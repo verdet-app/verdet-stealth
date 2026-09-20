@@ -70,17 +70,23 @@ again.
 
 ### Checking what you were given
 
-Every release is published from CI with [npm provenance][prov], so you can check that the tarball
-you received was built by a public workflow from a public commit rather than uploaded by somebody:
-
 ```bash
 npm audit signatures
 ```
 
-That is an answer rather than a promise, which is the same thing this library does everywhere
-else. **The source ships in the tarball too**, so the code you audit is the code you installed
-without cloning anything.
+That checks what you downloaded against the registry's signature over it, which is an answer
+rather than a promise, and the same thing this library does everywhere else.
 
+Releases from 0.1.1 onward check more. They are published by [trusted publishing][tp] from the
+workflow in this repository, which attaches a [provenance attestation][prov] tying the tarball to
+a public commit and a public build, so "this is the code in the repository" stops being something
+you take our word for. **0.1.0 is the exception**: a trusted publisher can only be attached to a
+package that already exists, so the first version had to be pushed by hand to create one.
+
+**The source ships in the tarball too**, so the code you audit is the code you installed without
+cloning anything.
+
+[tp]: https://docs.npmjs.com/trusted-publishers
 [prov]: https://docs.npmjs.com/generating-provenance-statements
 
 ---
