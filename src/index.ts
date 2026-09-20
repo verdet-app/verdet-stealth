@@ -8,6 +8,14 @@ export {
   type MetaAddressKeys,
 } from './meta-address.js'
 export {
+  deriveSharedSecret,
+  deriveStealthPublicKey,
+  deriveStealthPrivateScalar,
+  stealthAddressFrom,
+  CURVE_ORDER,
+  type SharedSecret,
+} from './derive.js'
+export {
   SECRET_KEY_BYTES,
   generateStealthKeys,
   keysFromPrivate,
