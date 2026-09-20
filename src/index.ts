@@ -98,3 +98,11 @@ export {
   type Scope,
 } from './scope.js'
 export { scopedWatchKeys } from './watch.js'
+export {
+  ringSign,
+  ringVerify,
+  ringKeyImage,
+  sameSigner,
+  type Ring,
+  type RingSignature,
+} from './ring.js'
