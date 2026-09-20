@@ -70,3 +70,6 @@ jobs:
         uses: gitleaks/gitleaks-action@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # One narrow allowlist, for the published interoperability vector. The reason is in the
+          # file, because an exception nobody can read is a scanner nobody should trust.
+          GITLEAKS_CONFIG: .gitleaks.toml

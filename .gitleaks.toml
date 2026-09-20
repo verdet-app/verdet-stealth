@@ -1,0 +1,28 @@
+# gitleaks configuration
+#
+# The default rules, plus one narrow exception. The exception is written here rather than by
+# turning the scan off, because a secret scanner nobody can argue with is the point of having one.
+
+[extend]
+useDefault = true
+
+[[rules]]
+id = "generic-api-key"
+
+  # The published interoperability vector, and nothing else.
+  #
+  # ERC-5564 does not specify how the shared-secret point is serialised, and three defensible
+  # readings give three different stealth addresses. So this library publishes what it produces
+  # from three keys that are visibly not keys: 0x1111..., 0x2222... and 0x3333..., thirty-two
+  # repeated bytes each. Another implementation that agrees on every output agrees on the
+  # encoding, and one that does not has found a real disagreement.
+  #
+  # The two values gitleaks flags are outputs of that vector: the shared-secret hash and the
+  # derived stealth private key. They are high entropy because they are hashes, and they are in
+  # the repository on purpose. An address whose private key is printed in a public test file is
+  # not an address anybody will be funding.
+  #
+  # The path is one file. If a second file ever needs listing here, that is a conversation rather
+  # than a wildcard.
+  [rules.allowlist]
+  paths = ['''^test/interop\.test\.mjs$''']
