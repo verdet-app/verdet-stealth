@@ -39,4 +39,13 @@ export {
   encodeStealthMetaAddressOf,
   decodeStealthMetaAddressOf,
 } from './registry.js'
+export {
+  ANNOUNCE_SELECTOR,
+  ANNOUNCEMENT_TOPIC,
+  encodeAnnounce,
+  decodeAnnouncementLog,
+  type AnnounceInput,
+  type RawLog,
+  type DecodedAnnouncement,
+} from './announcer.js'
 export { hexToBytesLoose } from './abi.js'
