@@ -96,7 +96,7 @@ test('signing with a key that does not own the address is refused', () => {
 test('s is in the lower half, which Ethereum requires', () => {
   /* The other half of every signature pair is equally valid mathematically and many contracts
    * refuse it, because accepting both makes a signature malleable. */
-  const half = BigInt('0x7fffffffffffffffffffffffffffffff5d576e7357a4501ddfe92f46681b20a0')
+  const half = BigInt('0x7fffffffffffffffffffffffffffffff5d576e7357a4501ddfe92f46681b20a0') // not-a-key: half the group order
   for (let i = 0; i < 12; i += 1) {
     const signed = signPermit(permitDigest({ ...terms, nonce: BigInt(i) }), KEY, OWNER)
     assert.ok(BigInt(signed.s) <= half, `s is in the upper half at nonce ${i}`)

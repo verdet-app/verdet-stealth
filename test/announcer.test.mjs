@@ -29,7 +29,7 @@ const CALLER = '0x4444444444444444444444444444444444444444'
 
 test('the selector and the topic are the ones the specification names', () => {
   assert.equal(hex(ANNOUNCE_SELECTOR), '4d1f9583', 'announce(uint256,address,bytes,bytes)')
-  assert.equal(ANNOUNCEMENT_TOPIC, '0x5f0eab8057630ba7676c49b4f21a0231414e79474595be8e4c432fbf6bf0f4e7')
+  assert.equal(ANNOUNCEMENT_TOPIC, '0x5f0eab8057630ba7676c49b4f21a0231414e79474595be8e4c432fbf6bf0f4e7') // not-a-key: keccak of the event signature
 })
 
 test('announce calldata is laid out exactly as the ABI says', () => {

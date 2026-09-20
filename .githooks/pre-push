@@ -43,10 +43,17 @@ ok "no private paths tracked"
 #
 # Not a replacement for gitleaks, which CI runs. This catches the two shapes that have actually
 # shown up in this project: a hex private key pasted into a source file, and a provider token.
-if git grep -nEI '(^|[^0-9a-fA-Fx])0x[0-9a-fA-F]{64}([^0-9a-fA-F]|$)' -- 'src' 'test' ':!test/interop.test.mjs' >/dev/null 2>&1; then
-  red "a 32 byte hex literal appears outside the published test vector:"
-  git grep -nEI '(^|[^0-9a-fA-Fx])0x[0-9a-fA-F]{64}([^0-9a-fA-F]|$)' -- 'src' 'test' ':!test/interop.test.mjs' | head -5
-  fail "check whether that is a key"
+#
+# A line may declare itself not a key with a trailing `not-a-key:` comment and a reason. The
+# check exists to force somebody to look at every 32 byte literal, not to be argued with, so an
+# exception is a visible line in a diff rather than a quietly loosened pattern.
+HEX='(^|[^0-9a-fA-Fx])0x[0-9a-fA-F]{64}([^0-9a-fA-F]|$)'
+UNEXPLAINED=$(git grep -nEI "$HEX" -- 'src' 'test' ':!test/interop.test.mjs' | grep -v 'not-a-key' || true)
+if [ -n "$UNEXPLAINED" ]; then
+  red "a 32 byte hex literal appears with no reason given:"
+  printf '%s
+' "$UNEXPLAINED" | head -5
+  fail "check whether that is a key, and mark it not-a-key with a reason if it is not"
 fi
 if git grep -nEI 'gh[pousr]_[A-Za-z0-9]{20,}' -- . >/dev/null 2>&1; then
   fail "a GitHub token appears in the tree"
