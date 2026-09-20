@@ -62,3 +62,11 @@ export {
 } from './permit.js'
 export { hexToBytesLoose } from './abi.js'
 export { deriveRequest, deriveRequests, requestEphemeralScalar, type PaymentRequest } from './request.js'
+export {
+  scopedViewingKey,
+  deriveScope,
+  keysForScope,
+  scopeLabelBytes,
+  SCOPE_LABEL_MAX_BYTES,
+  type Scope,
+} from './scope.js'
