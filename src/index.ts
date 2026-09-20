@@ -72,6 +72,15 @@ export {
   type WatchedRequest,
 } from './watch.js'
 export {
+  sealNotes,
+  openNotes,
+  checkNotes,
+  NOTE_MAX_LENGTH,
+  NOTES_MAX,
+  type NoteBlob,
+  type Notes,
+} from './notes.js'
+export {
   scopedViewingKey,
   deriveScope,
   keysForScope,
