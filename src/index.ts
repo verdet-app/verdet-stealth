@@ -32,3 +32,4 @@ export {
   type AnnouncementCandidate,
   type StealthMatch,
 } from './payment.js'
+export { hexToBytesLoose } from './abi.js'
