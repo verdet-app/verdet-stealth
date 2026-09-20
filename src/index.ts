@@ -106,3 +106,13 @@ export {
   type Ring,
   type RingSignature,
 } from './ring.js'
+export {
+  proveControl,
+  verifyControl,
+  proveControlOfSet,
+  verifyControlOfSet,
+  provePayment,
+  verifyPayment,
+  type ControlProof,
+  type PaymentProof,
+} from './prove.js'
