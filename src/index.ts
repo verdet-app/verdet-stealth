@@ -63,6 +63,15 @@ export {
 export { hexToBytesLoose } from './abi.js'
 export { deriveRequest, deriveRequests, requestEphemeralScalar, type PaymentRequest } from './request.js'
 export {
+  watchKeysFrom,
+  encodeWatchKey,
+  decodeWatchKey,
+  watchRequest,
+  watchRequests,
+  type WatchKeys,
+  type WatchedRequest,
+} from './watch.js'
+export {
   scopedViewingKey,
   deriveScope,
   keysForScope,
@@ -70,3 +79,4 @@ export {
   SCOPE_LABEL_MAX_BYTES,
   type Scope,
 } from './scope.js'
+export { scopedWatchKeys } from './watch.js'
