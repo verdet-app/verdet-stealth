@@ -68,6 +68,21 @@ There is no configuration, no network call and no state. Every address regenerat
 keys and an index, so a wallet restored on another machine walks the numbers and finds all of them
 again.
 
+### Checking what you were given
+
+Every release is published from CI with [npm provenance][prov], so you can check that the tarball
+you received was built by a public workflow from a public commit rather than uploaded by somebody:
+
+```bash
+npm audit signatures
+```
+
+That is an answer rather than a promise, which is the same thing this library does everywhere
+else. **The source ships in the tarball too**, so the code you audit is the code you installed
+without cloning anything.
+
+[prov]: https://docs.npmjs.com/generating-provenance-statements
+
 ---
 
 ## What is in it

@@ -76,6 +76,25 @@ docs(security): name what is in scope
   identities in the author, committer or message. Contributors here are people.
 - Never amend or force-push a commit that is already on `main`.
 
+## Releasing
+
+Publishing runs in CI and nowhere else, because a publish from a laptop cannot carry a provenance
+attestation and an unattested tarball is the thing this library argues against.
+
+1. Land the change on `main` with CI green.
+2. Update `CHANGELOG.md`. An entry that changes a derivation says so at the top of it, because a
+   derivation change means addresses that no longer match.
+3. `npm version <patch|minor>` to bump the manifest and create the tag.
+4. `git push --follow-tags`
+5. Publish a GitHub release for that tag. The `release` workflow builds, tests, checks the tag
+   against the manifest, and publishes with `--provenance`.
+
+The workflow can be run by hand with `workflow_dispatch` to pack and verify without publishing,
+which is how to prove the pipeline without spending a version number.
+
+**Pre-1.0.** The surface can change between minor versions. Anything that changes a derivation is
+a breaking change whatever the number says, because somebody's addresses stop matching.
+
 ## Pull requests
 
 Branch per change, pull request into `main`. Green CI, and a body that says what would be different
