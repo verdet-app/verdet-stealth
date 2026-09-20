@@ -1,0 +1,78 @@
+name: release
+
+# Publishing happens here and nowhere else.
+#
+# The reason is provenance. npm can attest that a tarball was built by this workflow, from this
+# commit, in this public repository, and sign that attestation through sigstore. A consumer then
+# runs `npm audit signatures` and gets an answer rather than a promise, which is the same argument
+# this library makes about everything else it does.
+#
+# A publish from somebody's laptop cannot produce that attestation, so it is not how this ships.
+
+on:
+  release:
+    types: [published]
+
+  # A dry run on demand, so the pipeline can be proved without spending a version number.
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: Pack and verify without publishing
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      # Required for provenance. Without it npm signs nothing and the publish is an ordinary one.
+      id-token: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: https://registry.npmjs.org
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Test
+        run: node --test "test/*.test.mjs"
+
+      # The tag and the manifest have to agree, or the release page points at a version that was
+      # never published. Checked before the publish rather than discovered after it.
+      - name: Tag matches the version
+        if: github.event_name == 'release'
+        run: |
+          TAG="${GITHUB_REF_NAME#v}"
+          PKG=$(node -p "require('./package.json').version")
+          if [ "$TAG" != "$PKG" ]; then
+            echo "::error::tag $GITHUB_REF_NAME does not match package version $PKG"
+            exit 1
+          fi
+          echo "tag and package agree on $PKG"
+
+      - name: Pack
+        run: npm pack --dry-run
+
+      - name: Publish
+        if: github.event_name == 'release'
+        run: npm publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Not published
+        if: github.event_name != 'release'
+        run: echo "dry run only. Publishing runs when a release is published."
