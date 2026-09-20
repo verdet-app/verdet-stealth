@@ -90,6 +90,21 @@ by anything that ever gains access to it.
 
 [tp]: https://docs.npmjs.com/trusted-publishers
 
+### The one-time setup, written down because it is done once and then forgotten
+
+On npmjs.com, under the package's settings, add a trusted publisher:
+
+| Field | Value |
+|---|---|
+| Publisher | GitHub Actions |
+| Organization or user | `verdet-app` |
+| Repository | `verdet-stealth` |
+| Workflow filename | `release.yml` |
+| Environment | leave empty |
+
+Nothing else is needed. No secret is added to the repository, and if one ever appears there it is
+a mistake rather than a step somebody forgot to undo.
+
 1. Land the change on `main` with CI green.
 2. Update `CHANGELOG.md`. An entry that changes a derivation says so at the top of it, because a
    derivation change means addresses that no longer match.
