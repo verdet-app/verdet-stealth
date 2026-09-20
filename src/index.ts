@@ -50,4 +50,14 @@ export {
 } from './announcer.js'
 
 export { lockKeys, unlockKeys, VAULT_ITERATIONS, type VaultBlob } from './vault.js'
+export {
+  permitDigest,
+  signPermit,
+  encodeSweep,
+  encodeNoncesCall,
+  encodeDomainSeparatorCall,
+  type PermitTerms,
+  type SignedPermit,
+  type SweepCalls,
+} from './permit.js'
 export { hexToBytesLoose } from './abi.js'
