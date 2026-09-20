@@ -48,4 +48,6 @@ export {
   type RawLog,
   type DecodedAnnouncement,
 } from './announcer.js'
+
+export { lockKeys, unlockKeys, VAULT_ITERATIONS, type VaultBlob } from './vault.js'
 export { hexToBytesLoose } from './abi.js'
