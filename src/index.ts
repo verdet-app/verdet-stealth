@@ -61,3 +61,4 @@ export {
   type SweepCalls,
 } from './permit.js'
 export { hexToBytesLoose } from './abi.js'
+export { deriveRequest, deriveRequests, requestEphemeralScalar, type PaymentRequest } from './request.js'
