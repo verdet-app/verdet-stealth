@@ -116,3 +116,11 @@ export {
   type ControlProof,
   type PaymentProof,
 } from './prove.js'
+export {
+  otSenderBegin,
+  otReceiverChoose,
+  otSenderKeys,
+  otReceiverKey,
+  type SenderSetup,
+  type ReceiverRequest,
+} from './oblivious.js'
