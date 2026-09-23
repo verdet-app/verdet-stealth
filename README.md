@@ -302,6 +302,33 @@ the vector is how we find out which.
 
 ---
 
+## The project this came from
+
+[verdet.app](https://verdet.app), a privacy wallet for tokenized equities on chain 4663. The
+library is the derivation layer under it and is useful on its own; nothing here needs the wallet,
+the site or a token.
+
+There is a token, and it is named here for one reason: **so there is a statement of which contract
+is ours, in a place that is signed, versioned and hard to forge.**
+
+| | |
+|---|---|
+| Name | `Verdet` |
+| Symbol | `VRDT` |
+| Chain | 4663 |
+| Contract | `0x63C54a6F4260D8075A33eC28245edfC3BbF898Df` |
+
+Read it back yourself rather than believing this table:
+
+```bash
+curl -s https://verdet.app/api/rpc -H 'content-type: application/json' \
+  -d '{"jsonrpc":"2.0","id":1,"method":"eth_call","params":[{"to":"0x63C54a6F4260D8075A33eC28245edfC3BbF898Df","data":"0x95d89b41"},"latest"]}'
+```
+
+`0x95d89b41` is `symbol()`. Any other contract claiming this name is not this one.
+
+---
+
 ## Licence
 
 MIT. See [LICENSE](LICENSE).
