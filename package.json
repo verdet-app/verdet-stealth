@@ -1,6 +1,6 @@
 {
   "name": "@verdet/stealth",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "type": "module",
   "description": "Stealth addresses, ring signatures, sigma-protocol proofs and oblivious transfer over secp256k1. No dependencies beyond audited curve and hash primitives.",
   "license": "MIT",
