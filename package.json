@@ -32,6 +32,9 @@
     }
   },
   "types": "./dist/index.d.ts",
+  "bin": {
+    "verdet": "./dist/cli.js"
+  },
   "files": [
     "dist",
     "src",

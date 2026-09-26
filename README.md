@@ -53,6 +53,33 @@ package is about what you can still prove, disclose and withhold once they are g
 npm install @verdet/stealth
 ```
 
+### Or run it without installing anything
+
+```bash
+npx @verdet/stealth
+```
+
+The package ships a command, because the argument this library makes is that you do not have to
+take anybody's description of ERC-5564 on trust, and that argument has a hole in it while the only
+way to run the code is to write a program that imports it.
+
+```
+npx @verdet/stealth keys                    a spending key, a viewing key, a meta-address
+npx @verdet/stealth address st:eth:0x...    a one-time address for somebody else's meta-address
+npx @verdet/stealth check st:eth:0x...      what is inside a meta-address
+```
+
+Add `--json` to any of them for one object on stdout.
+
+**There is no network in the command and none underneath it.** Nothing reads a chain, posts an
+announcement or contacts a registry. Every command is arithmetic over inputs you supply, which is
+what makes it safe to run on a machine you care about, and what makes its output something you can
+check against any other implementation of the spec.
+
+**Private keys are not printed unless you ask.** `keys` shows you a meta-address and two public
+keys and withholds the rest. A secret on a terminal is a secret in a scrollback buffer, and in a
+shell history if it was piped, so printing them takes `--show-secret` and says what it costs.
+
 ```ts
 import { generateStealthKeys, deriveRequest } from '@verdet/stealth'
 

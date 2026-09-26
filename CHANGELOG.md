@@ -8,6 +8,44 @@ derivation change means addresses that no longer match.
 
 Nothing yet.
 
+## 0.2.0
+
+No derivation changed. Every address this version produces is an address `0.1.0` produces.
+
+**The first release published by the workflow**, so the first tarball carrying a provenance
+attestation. `npm audit signatures` now answers for it rather than for the registry signature
+alone. `0.1.0` remains the one exception, for the reason in its own entry below.
+
+### Added
+
+- **A command.** `npx @verdet/stealth` derives a key pair, turns a published meta-address into the
+  one-time address a payment to it should go to, and takes a meta-address apart.
+
+  It exists because the argument this package makes had a hole in it. The README says you do not
+  have to take anybody's description of ERC-5564 on trust, and that was true only for people
+  willing to write a program that imports it first.
+
+  - **No network in it and none under it.** Nothing reads a chain, posts an announcement or
+    contacts a registry. Every command is arithmetic over inputs you supply, which is what makes it
+    safe to run on a machine you care about and what makes its output something you can check
+    against any other implementation of the spec.
+  - **Private keys are withheld unless you ask.** `keys` shows a meta-address and two public keys.
+    `--show-secret` prints the rest, and says what a secret on a terminal costs you.
+  - `--json` on any command, for piping. `--no-color` and `NO_COLOR` are honoured, and colour is
+    off by default when the output is not a terminal.
+  - The version in the banner is read from the manifest at startup rather than written into the
+    source, so it cannot report a release that does not exist.
+
+### Notes
+
+- **The only new surface is the binary.** The library's exports are unchanged, so upgrading from
+  `0.1.0` cannot break an import.
+- **The command's tests spawn it as a process** rather than importing it, because the parts of a
+  CLI that break live between `process.argv` and `process.exitCode`. The withholding of private
+  keys is asserted from both directions, absent by default and present with the flag: a test that
+  only checked the default would still pass if the flag had quietly stopped working, and the
+  warning printed beside them would then be attached to nothing.
+
 ## 0.1.0
 
 Released 2026-09-20. First published version. Everything below runs in production at
